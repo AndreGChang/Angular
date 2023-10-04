@@ -1,0 +1,25 @@
+<input type="number" [(ngModel)]="num1">
+<input type="number" [(ngModel)]="num1">
+
+<input type="text" [disabled]="carregando">
+
+<input type="button" (click)="alerta()">
+
+<p *ngFor="let numero of lista">
+ <span *ngIf="numero < 3">{{numero}}</span>
+</p>
+
+<div class="borda">
+  conteudo do index...
+</div>
+<br>
+<div class="container">
+  <div class="content">
+    <app-carroslist></app-carroslist>
+    <app-pessoaslist></app-pessoaslist>
+  </div>
+
+
+</div>
+
+

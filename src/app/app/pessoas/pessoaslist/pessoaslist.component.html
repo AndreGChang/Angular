@@ -1,0 +1,11 @@
+<p>Lista de pessoas</p>
+<table border="1px">
+  <tr>
+    <th>NOME</th>
+    <th>IDADE</th>
+  </tr>
+  <tr *ngFor="let pessoas of lista" [hidden] = "pessoas.idade <= 30">
+      <td>{{pessoas.nome}}</td>
+      <td>{{pessoas.idade}}</td>
+  </tr>
+</table>
