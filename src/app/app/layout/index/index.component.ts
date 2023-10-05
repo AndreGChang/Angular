@@ -22,4 +22,5 @@ export class IndexComponent {
   alerta(){
     alert("dale");
   }
+
 }
