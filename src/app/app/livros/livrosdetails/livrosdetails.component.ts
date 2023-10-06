@@ -1,10 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Pessoas } from './../../pessoas/pessoas';
+import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
-import { ElementRef } from '@angular/core';
-import { LivroslistComponent } from '../livroslist/livroslist.component';
-import { Livro } from '../livro';
 import { ActivatedRoute } from '@angular/router';
+import { BdimemoryService } from '../bdimemory.service';
+import { Livro } from '../livro';
 
 @Component({
   selector: 'app-livrosdetails',
@@ -12,43 +12,29 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./livrosdetails.component.scss']
 })
 
-export class LivrosdetailsComponent {
+export class LivrosdetailsComponent implements OnInit{
+  roteador = inject(ActivatedRoute);
+  bd = inject(BdimemoryService);
+  
+  @Input() livro: Livro = new Livro(0,"","");
 
-  id!: number;
-  autor!: string;
-  titulo!: string;
-  a!: LivroslistComponent;
-  i!: number;
-  roteador = inject(ActivatedRoute)
-
-  listaString = localStorage.getItem('chaveListaNoLocalStorage');
+  @Output() retorno = new EventEmitter<Livro>();
 
   constructor() {
     let id = this.roteador.snapshot.paramMap.get('id');
 
     if (id) {
-
+      this.livro = this.bd.getId(+id);
     }
-
-    if (this.listaString) {
-      // Converte a string JSON de volta para uma lista (array) de JavaScript
-      const listaRecuperada: string[] = JSON.parse(this.listaString);
-      console.log('Lista recuperada do localStorage:', listaRecuperada);
-    } else {
-      console.log('Nenhuma lista encontrada no localStorage para a chave fornecida.');
-    }
-
   }
 
-
-  dale():void{
-    this.a.lista.forEach(e=>{
-      console.log(e.id);
-      console.log(e.autor);
-    })
+  ngOnInit(): void {
+      this.livro = Object.assign({}, this.livro);
   }
 
-
+  salvar(){
+    this.retorno.emit(this.livro);
+  }
 
 
 }

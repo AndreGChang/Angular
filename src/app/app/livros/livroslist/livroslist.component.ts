@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Livro } from '../livro';
+import { BdimemoryService } from '../bdimemory.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Pessoas } from '../../pessoas/pessoas';
 
 @Component({
   selector: 'app-livroslist',
@@ -7,25 +10,39 @@ import { Livro } from '../livro';
   styleUrls: ['./livroslist.component.scss']
 })
 export class LivroslistComponent {
+
+  modalService = inject(NgbModal);
+  bd = inject(BdimemoryService);
+
+  livroSelecionado!: Livro;
+  indiceSelect!: number;
+
   lista: Livro[] = [];
-  listaString = JSON.stringify(this.lista);
 
   constructor(){
-    this.lista.push(new Livro(1,"dale", "1"))
-    this.lista.push(new Livro(2,"dpoggers", "3"))
-    this.lista.push(new Livro(3,"andre", "2"))
-    this.lista.push(new Livro(4,"bruh", "5"))
-    this.lista.push(new Livro(5,"tchongers", "7"))
-    this.lista.push(new Livro(6,"blobers", "9"))
-    this.lista.push(new Livro(7,"tank", "10"))
-    this.lista.push(new Livro(8,"kkk", "4"))
-
-    localStorage.setItem('chaveListaNoLocalStorage', this.listaString);
-    console.log('Lista salva no localStorage.');
+    this.lista = this.bd.lista;
   }
 
+  abrirModal(content : any){
+    this.livroSelecionado = new Livro(0,"","");
+    this.modalService.open(content, {size:"lg"});
+  }
 
+  abrirModalEditar(editar : any, livro:any, indice: number){
+    this.indiceSelect = indice;
+    this.livroSelecionado = livro;
+    this.modalService.open(editar, {size:"lg"});
+  }
 
+  addLista(livro : Livro){
 
+    if(livro.id > 0){
+      this.lista[this.indiceSelect] = livro;
+    }else{
+      this.lista.push(livro);
+    }
+    this.modalService.dismissAll();
+
+  }
 
 }

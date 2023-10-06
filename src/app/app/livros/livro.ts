@@ -9,8 +9,4 @@ export class Livro {
     this.autor = autor;
   }
 
- getId():number {
-  return this.id;
- }
-
 }

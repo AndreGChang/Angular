@@ -1,14 +1,16 @@
 <p>livrosdetails works!</p>
 <div class="container">
-  <div class="input-group input-group-lg">
-    <span class="input-group-text" id="inputGroup-sizing-lg">Livro</span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" [(ngModel)]="autor">
-  </div>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Livro</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg" [(ngModel)]="livro.autor">
+      </div>
+      <br>
+      <div class="input-group input-group-lg">
+        <span class="input-group-text" id="inputGroup-sizing-lg">Autor</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-lg" [(ngModel)]="livro.titulo">
+      </div>
   <br>
-  <div class="input-group input-group-lg">
-    <span class="input-group-text" id="inputGroup-sizing-lg">Autor</span>
-    <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg" [(ngModel)]="titulo">
-  </div>
-  <br>
-  <button type="button" class="btn btn-primary btn-lg">Primary</button>
+  <button type="button" class="btn btn-primary btn-lg" (click)="salvar()">SALVAR</button>
 </div>

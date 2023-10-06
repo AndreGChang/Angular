@@ -1,15 +1,33 @@
 <table border="1px">
   <tr>
+    <th>ID</th>
     <th>NOME</th>
     <th>ANO</th>
     <th>EDITAR</th>
   </tr>
-    <tr *ngFor="let livro of lista">
-      <td>{{livro.titulo}}</td>
-      <td>{{livro.autor}}</td>
-      <td><button type="button" class="btn btn-info" routerLink="/admin/livros/editar/{{livro.id}}">Editar</button></td>
-    </tr>
+  <tr *ngFor="let livro of lista; let i = index">
+    <td>{{livro.id}}</td>
+    <td>{{livro.titulo}}</td>
+    <td>{{livro.autor}}</td>
+    <td><button type="button" class="btn btn-info" (click)="abrirModalEditar(content, livro,i)">Editar</button></td>
+  </tr>
 </table>
+
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  </div>
+  <div class="modal-body">
+
+      <app-livrosdetails [livro]="livroSelecionado" (retorno)= "addLista($event)"></app-livrosdetails>
+
+  </div>
+
+</ng-template>
 <div>
-  <button routerLink="/admin/livros/novo">NOVO LIVRO</button>
+  <button (click)="abrirModal(content)">NOVO LIVRO</button>
 </div>
