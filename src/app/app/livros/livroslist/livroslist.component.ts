@@ -39,10 +39,19 @@ export class LivroslistComponent {
     if(livro.id > 0){
       this.lista[this.indiceSelect] = livro;
     }else{
-      this.lista.push(livro);
+      this.adivionarLivro(livro.autor,livro.titulo);
+      //this.lista.push(livro);
     }
     this.modalService.dismissAll();
 
+  }
+
+  fecharModal(){
+    this.modalService.dismissAll();
+  }
+
+  adivionarLivro(autor:string, titulo:string){
+    this.bd.adicionarLivro(autor,titulo);
   }
 
 }

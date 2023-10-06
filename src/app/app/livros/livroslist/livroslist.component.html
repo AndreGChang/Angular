@@ -1,33 +1,45 @@
-<table border="1px">
-  <tr>
-    <th>ID</th>
-    <th>NOME</th>
-    <th>ANO</th>
-    <th>EDITAR</th>
-  </tr>
-  <tr *ngFor="let livro of lista; let i = index">
-    <td>{{livro.id}}</td>
-    <td>{{livro.titulo}}</td>
-    <td>{{livro.autor}}</td>
-    <td><button type="button" class="btn btn-info" (click)="abrirModalEditar(content, livro,i)">Editar</button></td>
-  </tr>
-</table>
-
-
+<section class="container">
+  <div class="content">
+    <div class="d-grid gap-3">
+      <div></div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success" (click)="abrirModal(content)">Novo livro</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Titulo</th>
+              <th scope="col">Autor</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let livro of lista; let i = index">
+              <th scope="row">{{livro.id}}</th>
+              <td class="text-truncate">{{livro.titulo}}</td>
+              <td class="text-truncate">{{livro.autor}}</td>
+              <td class="d-flex justify-content-center"><button type="button" class="btn btn-info btn-lg"
+                  (click)="abrirModalEditar(content, livro,i)">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
 
 <ng-template #content let-modal>
   <div class="modal-header">
     <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="fecharModal()"></button>
   </div>
   <div class="modal-body">
 
-      <app-livrosdetails [livro]="livroSelecionado" (retorno)= "addLista($event)"></app-livrosdetails>
+    <app-livrosdetails [livro]="livroSelecionado" (retorno)="addLista($event)"></app-livrosdetails>
 
   </div>
 
 </ng-template>
-<div>
-  <button (click)="abrirModal(content)">NOVO LIVRO</button>
-</div>
