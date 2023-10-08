@@ -15,6 +15,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { LivroslistComponent } from './app/livros/livroslist/livroslist.component';
 import { LivrosdetailsComponent } from './app/livros/livrosdetails/livrosdetails.component';
 import { BdimemoryService } from './app/livros/bdimemory.service';
+import { CarrosdetailsComponent } from './app/carros/carrosdetails/carrosdetails.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { BdimemoryService } from './app/livros/bdimemory.service';
     HeaderComponent,
     LoginComponent,
     LivroslistComponent,
-    LivrosdetailsComponent
+    LivrosdetailsComponent,
+    CarrosdetailsComponent
   ],
   imports: [
     BrowserModule,

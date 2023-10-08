@@ -1,4 +1,3 @@
-import { Pessoas } from './../../pessoas/pessoas';
 import { Component, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { FormsModule } from '@angular/forms';
@@ -15,7 +14,7 @@ import { Livro } from '../livro';
 export class LivrosdetailsComponent implements OnInit{
   roteador = inject(ActivatedRoute);
   bd = inject(BdimemoryService);
-  
+
   @Input() livro: Livro = new Livro(0,"","");
 
   @Output() retorno = new EventEmitter<Livro>();

@@ -1,6 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component, EventEmitter, Output, inject, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Pessoas } from '../pessoas';
+import { Pessoa } from '../pessoas';
+import { DbpessoasService } from '../dbpessoas.service';
 
 @Component({
   selector: 'app-pessoasdetails',
@@ -9,12 +10,28 @@ import { Pessoas } from '../pessoas';
 })
 export class PessoasdetailsComponent {
   route = inject(ActivatedRoute);
-  pessoa!: Pessoas;
+  db = inject(DbpessoasService);
+
+  @Input() pessoa = new Pessoa(0,"",0);
+
+  @Output() retorno =  new EventEmitter<Pessoa>();
+
 
   constructor(){
     let id = this.route.snapshot.paramMap.get("id");
-    console.log(id);
+
+    if(id){
+      this.pessoa = this.db.getId(+id);
+    }
+
   }
 
+  ngOnInit(): void{
+    this.pessoa = Object.assign({}, this.pessoa);
+  }
+
+  salvar(){
+    this.retorno.emit(this.pessoa);
+  }
 
 }

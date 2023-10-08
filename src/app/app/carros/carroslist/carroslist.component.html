@@ -1,12 +1,43 @@
-<p>listagem de carros</p>
+<section class="container">
+  <div class="content">
+    <div class="d-grid gap-3">
+      <div></div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success" (click)="abrirModal(content)">Novo Carro</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Ano</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let carro of lista; let i = index">
+              <th scope="row">{{carro.id}}</th>
+              <td class=>{{carro.nome}}</td>
+              <td class=>{{carro.ano}}</td>
+              <td class="d-flex justify-content-center"><button type="button"
+                  class="btn btn-info btn-lg" (click)="abrirModalEditar(content, carro,i)">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
 
-<table border="1px">
-  <tr>
-    <th>NOME</th>
-    <th>ANO</th>
-  </tr>
-    <tr *ngFor="let carro of lista">
-      <td>{{carro.nome}}</td>
-      <td>{{carro.ano}}</td>
-    </tr>
-</table>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="fecharModal()"></button>
+  </div>
+  <div class="modal-body">
+    <app-carrosdetails [carro]="carroSelecionado" (retorno)="addLista($event)"></app-carrosdetails>
+  </div>
+</ng-template>

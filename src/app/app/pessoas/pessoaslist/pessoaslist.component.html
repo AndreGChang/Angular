@@ -1,11 +1,46 @@
-<p>Lista de pessoas</p>
-<table border="1px">
-  <tr>
-    <th>NOME</th>
-    <th>IDADE</th>
-  </tr>
-  <tr *ngFor="let pessoas of lista" [hidden] = "pessoas.idade <= 30">
-      <td>{{pessoas.nome}}</td>
-      <td>{{pessoas.idade}}</td>
-  </tr>
-</table>
+<section class="container">
+  <div class="content">
+    <div class="d-grid gap-3">
+      <div></div>
+      <div class="d-flex justify-content-end">
+        <button type="button" class="btn btn-success" (click)="abrirModal(content)">Novo livro</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-striped table-hover table-bordered">
+          <thead class="table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Idade</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let pessoa of lista; let i = index">
+              <th scope="row">{{pessoa.id}}</th>
+              <td class="text-truncate">{{pessoa.nome}}</td>
+              <td class="text-truncate">{{pessoa.idade}}</td>
+              <td class="d-flex justify-content-center"><button type="button" class="btn btn-info btn-lg"
+                  (click)="abrirModalEditar(content, pessoa,i)">Editar</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="fecharModal()"></button>
+  </div>
+  <div class="modal-body">
+
+    <app-pessoasdetails [pessoa]="pessoaSelecionada" (retorno)="addLista($event)"></app-pessoasdetails>
+
+
+  </div>
+
+</ng-template>

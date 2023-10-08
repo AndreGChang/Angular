@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import { Pessoas } from '../pessoas';
+import { Component, inject } from '@angular/core';
+import { Pessoa } from '../pessoas';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { DbpessoasService } from '../dbpessoas.service';
 
 @Component({
   selector: 'app-pessoaslist',
@@ -7,60 +9,48 @@ import { Pessoas } from '../pessoas';
   styleUrls: ['./pessoaslist.component.scss']
 })
 export class PessoaslistComponent {
-  lista: Pessoas[] = [];
- 
+  lista: Pessoa[] = [];
+
+  //injetamos para usar funcionalidades da modal do bootstrap
+  modalService = inject(NgbModal);
+  //minha service que contem os dados (normalmente faz conexao com o back-end)
+  bd = inject(DbpessoasService);
+
+  //usados para a edicao pegar o objeto selecionado e o indice dele;
+  pessoaSelecionada!: Pessoa;
+  indiceSelect!: number;
+
   constructor() {
-    let pessoa1: Pessoas = new Pessoas();
-    pessoa1.nome = "andre"
-    pessoa1.idade = 35;
+    this.lista = this.bd.lista;
+    console.log(this.lista);
+  }
 
-    let pessoa2: Pessoas = new Pessoas();
-    pessoa2.nome = "carlos"
-    pessoa2.idade = 50;
+  abrirModal(content : any){
+    this.pessoaSelecionada =  new Pessoa(0, "", 0);
+    this.modalService.open(content, {size:"lg"});
+  }
 
-    let pessoa3: Pessoas = new Pessoas();
-    pessoa3.nome = "dale"
-    pessoa3.idade = 20;
+  abrirModalEditar(content : any, pessoa: any , indice : number){
+    this.indiceSelect = indice;
+    this.pessoaSelecionada = pessoa;
+    this.modalService.open(content, {size:"lg"});
+  }
 
-    let pessoa4: Pessoas = new Pessoas();
-    pessoa4.nome = "robert"
-    pessoa4.idade = 70;
+  addLista(pessoa : Pessoa){
+    if(pessoa.id > 0){
+        this.lista[this.indiceSelect] = pessoa;
+    }else{
+      this.adicionarPessoa(pessoa.nome, pessoa.idade);
+    }
 
-    let pessoa5: Pessoas = new Pessoas();
-    pessoa5.nome = "poggers"
-    pessoa5.idade = 107;
+    this.modalService.dismissAll();
+  }
 
-    let pessoa6: Pessoas = new Pessoas();
-    pessoa6.nome = "lula mosluco"
-    pessoa6.idade = 90;
+  fecharModal(){
+    this.modalService.dismissAll();
+  }
 
-    let pessoa7: Pessoas = new Pessoas();
-    pessoa7.nome = "tchongers"
-    pessoa7.idade = 25;
-
-    let pessoa8: Pessoas = new Pessoas();
-    pessoa8.nome = "rogerio"
-    pessoa8.idade = 10;
-
-    let pessoa9: Pessoas = new Pessoas();
-    pessoa9.nome = "ok"
-    pessoa9.idade = 5;
-
-    let pessoa10: Pessoas = new Pessoas();
-    pessoa10.nome = "asd"
-    pessoa10.idade = 75;
-
-    this.lista.push(pessoa1);
-    this.lista.push(pessoa2);
-    this.lista.push(pessoa3);
-    this.lista.push(pessoa4);
-    this.lista.push(pessoa5);
-    this.lista.push(pessoa6);
-    this.lista.push(pessoa7);
-    this.lista.push(pessoa8);
-    this.lista.push(pessoa9);
-    this.lista.push(pessoa10);
-
-
+  adicionarPessoa(nome:string, idade:number){
+    this.bd.adicionarPessoa(nome,idade);
   }
 }

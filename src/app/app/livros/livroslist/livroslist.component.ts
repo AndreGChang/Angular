@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import { Livro } from '../livro';
 import { BdimemoryService } from '../bdimemory.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { Pessoas } from '../../pessoas/pessoas';
 
 @Component({
   selector: 'app-livroslist',

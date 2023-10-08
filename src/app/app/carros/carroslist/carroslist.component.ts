@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Carro } from '../carro';
+import { BdcarrosService } from '../bdcarros.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+
 
 @Component({
   selector: 'app-carroslist',
@@ -9,17 +12,42 @@ import { Carro } from '../carro';
 export class CarroslistComponent {
   lista: Carro[] = [];
 
-  constructor(){
-    let carro1: Carro = new Carro();
-    carro1.nome = 'gol'
-    carro1.ano = 2003
+  bd = inject(BdcarrosService);
+  modalService = inject(NgbModal);
 
-    let carro2: Carro = new Carro();
-    carro2.nome = 'civic'
-    carro2.ano = 2012
+  carroSelecionado!: Carro;
+  indiciSelect!: number;
 
-
-    this.lista.push(carro1)
-    this.lista.push(carro2)
+  constructor() {
+    this.lista = this.bd.lista;
   }
+
+  abrirModal(content: any) {
+    this.carroSelecionado = new Carro(0, "", 0);
+    this.modalService.open(content, { size: "lg" });
+  }
+
+  abrirModalEditar(content: any, carro: any, indice: number) {
+    this.indiciSelect = indice;
+    this.carroSelecionado = carro;
+    this.modalService.open(content, { size: "lg" });
+  }
+
+  addLista(carro: Carro) {
+    if (carro.id > 0) {
+      this.lista[this.indiciSelect] = carro;
+    } else {
+      this.adicionarCarro(carro.nome, carro.ano);
+    }
+    this.modalService.dismissAll();
+  }
+
+  fecharModal() {
+    this.modalService.dismissAll();
+  }
+
+  adicionarCarro(nome: string, ano: number) {
+    this.bd.adicionarCarro(nome, ano);
+  }
+
 }
