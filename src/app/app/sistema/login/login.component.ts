@@ -10,7 +10,7 @@ import { Component, inject } from '@angular/core';
 export class LoginComponent {
 
   usuario : Usuario = new Usuario();
-
+  verify = false;
   roteador = inject(Router);
 
   logar(){
@@ -18,7 +18,8 @@ export class LoginComponent {
       //libero rota
       this.roteador.navigate(["/admin/pessoas"])
     }else{
-      alert("Usuario ou senha incorretos")
+      this.verify = true;
+      //alert("Usuario ou senha incorretos")
     }
   }
 }

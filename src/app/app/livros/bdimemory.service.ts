@@ -11,14 +11,14 @@ export class BdimemoryService {
 
   constructor() {
 
-    this.lista.push(new Livro(1,"dpoggers", "3"))
+    this.lista.push(new Livro(1,"titulo", "autor"))
     this.lista.push(new Livro(2,"andre", "2"))
     this.lista.push(new Livro(3,"bruh", "5"))
 
   }
 
   adicionarLivro(autor:string, titulo:string) :void{
-   const novoLivro = new Livro(this.id, autor,titulo);
+   const novoLivro = new Livro(this.id, titulo,autor);
     this.lista.push(novoLivro);
     this.id++;
   }
